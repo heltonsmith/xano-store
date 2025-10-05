@@ -3,6 +3,8 @@
 
 // Importamos los hooks necesarios de React y la función para obtener productos de la API
 import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
+import ProductImagesSlider from "./ProductImagesSlider.jsx";
 import { listProducts } from "../api/xano";
 
 // Creamos un formateador de moneda para mostrar precios en formato CLP (pesos chilenos)
@@ -10,6 +12,7 @@ const CLP = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP",
 
 // Componente principal que recibe el token de autenticación como prop
 export default function ProductGrid({ token }) {
+  const { user } = useAuth();
   // Estados para manejar los productos y la interfaz
   const [items, setItems] = useState([]); // Lista de productos
   const [loading, setLoading] = useState(false); // Estado de carga
@@ -82,7 +85,8 @@ export default function ProductGrid({ token }) {
     <div className="container">
       {/* Cabecera con título, buscador y botón de recarga */}
       <div className="d-flex align-items-center mb-3 gap-3">
-        <h2 className="m-0 flex-grow-1">Productos</h2>
+        <h2 className="m-0 flex-grow-1">Productos (Axios)</h2>
+        <span className="small text-muted">Usuario: {user?.name || 'No conectado'}</span>
         {/* Campo de búsqueda */}
         <input
           placeholder="Buscar por nombre, marca, categoría…"
@@ -141,23 +145,11 @@ export default function ProductGrid({ token }) {
 
 // Componente Card para mostrar la información de un producto individual
 function Card({ product }) {
-  // Obtenemos la primera imagen del producto o usamos un placeholder si no tiene
-  const firstImg = Array.isArray(product.images) && product.images.length > 0 ? product.images[0] : null;
-  const cover = firstImg?.url || "https://placehold.co/600x400?text=Sin+imagen";
-  
   // Renderizamos la tarjeta del producto
   return (
     <div className="card h-100">
-      {/* Contenedor de la imagen con relación de aspecto fija */}
-      <div className="bg-light" style={{ aspectRatio: '4/3' }}>
-        <img
-          src={cover}
-          alt={product.name}
-          className="card-img-top h-100 w-100"
-          style={{ objectFit: 'cover' }}
-          loading="lazy" // Carga diferida para mejorar rendimiento
-        />
-      </div>
+      {/* Slider de imágenes mostrando todas las imágenes del producto */}
+      <ProductImagesSlider images={product.images} alt={product.name} aspect={'4/3'} />
       {/* Cuerpo de la tarjeta con información del producto */}
       <div className="card-body">
         {/* Nombre del producto */}

@@ -1,6 +1,8 @@
 // src/components/ProductGridFetch.jsx
 // Importamos los hooks necesarios de React
 import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
+import ProductImagesSlider from "./ProductImagesSlider.jsx";
 
 // Creamos un formateador de moneda para mostrar precios en formato CLP (pesos chilenos)
 // sin decimales y con el símbolo de la moneda
@@ -9,6 +11,7 @@ const CLP = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP",
 // Componente principal que muestra una cuadrícula de productos
 // Recibe el token de autenticación como prop
 export default function ProductGridFetch({ token }) {
+  const { user } = useAuth();
   // Estado para almacenar la lista de productos
   const [items, setItems] = useState([]);
   // Estado para controlar cuando está cargando datos
@@ -105,7 +108,8 @@ export default function ProductGridFetch({ token }) {
     <div className="container">
       {/* Barra superior con título, buscador y botón de recarga */}
       <div className="d-flex align-items-center mb-3 gap-3">
-        <h2 className="m-0 flex-grow-1">Productos (con Fetch)</h2>
+        <h2 className="m-0 flex-grow-1">Productos (Fetch)</h2>
+        <span className="small text-muted">Usuario: {user?.name || 'No conectado'}</span>
         {/* Input para búsqueda */}
         <input
           placeholder="Buscar por nombre, marca, categoría…"
@@ -164,44 +168,21 @@ export default function ProductGridFetch({ token }) {
 
 // Componente Card para mostrar cada producto individual
 function Card({ product: p }) {
-  // Obtenemos la URL de la primera imagen del producto, si existe
-  const mainImage = Array.isArray(p.images) && p.images[0]?.url;
-
   return (
     // Contenedor de la tarjeta con estilos y efectos al pasar el ratón
     <div
       className="card h-100"
-      // Efecto de elevación al pasar el ratón
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "translateY(-4px)";
         e.currentTarget.style.boxShadow = "0 12px 24px -12px rgba(0,0,0,0.15)";
       }}
-      // Restaurar al salir el ratón
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "";
         e.currentTarget.style.boxShadow = "";
       }}
     >
-      {/* Contenedor para la imagen del producto */}
-      <div className="bg-light position-relative" style={{ aspectRatio: "1/1" }}>
-        {mainImage ? (
-          // Si hay imagen, la mostramos
-          <img
-            src={mainImage}
-            alt={p.name}
-            className="w-100 h-100"
-            style={{ objectFit: "cover" }}
-          />
-        ) : (
-          // Si no hay imagen, mostramos un placeholder
-          <div
-            className="position-absolute d-flex align-items-center justify-content-center text-muted"
-            style={{ inset: 0 }}
-          >
-            Sin imagen
-          </div>
-        )}
-      </div>
+      {/* Slider de imágenes mostrando todas las imágenes del producto */}
+      <ProductImagesSlider images={p.images} alt={p.name} aspect={'1/1'} />
 
       {/* Información del producto */}
       <div className="card-body">
