@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "5dde4c54-127e-411e-883b-0020a051dcc9",
+		"name": "XANO Tienda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16798137"
+	},
+	"item": [
+		{
+			"name": "Post producto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Teclado Mecánico TKL\",\r\n  \"description\": \"Switches red, ANSI, hot-swap.\",\r\n  \"price\": 59990,\r\n  \"stock\": 25,\r\n  \"brand\": \"KeyMaster\",\r\n  \"category\": \"Periféricos\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://x8ki-letl-twmt.n7.xano.io/api:3Xncgo9I/product",
+					"protocol": "https",
+					"host": [
+						"x8ki-letl-twmt",
+						"n7",
+						"xano",
+						"io"
+					],
+					"path": [
+						"api:3Xncgo9I",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Helton Bustos\",\r\n  \"email\": \"heltonsmith@hotmail.com\",\r\n  \"password\": \"abc123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://x8ki-letl-twmt.n7.xano.io/api:PDQSRKQT/auth/signup",
+					"protocol": "https",
+					"host": [
+						"x8ki-letl-twmt",
+						"n7",
+						"xano",
+						"io"
+					],
+					"path": [
+						"api:PDQSRKQT",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch producto",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"images\": [\r\n    {\r\n      \"access\": \"public\",\r\n      \"path\": \"/vault/dAP3Ozc8/EvDVBNvIvm1qbVdoNScRfLO0pH0/UpEA3Q../1.jpg\",\r\n      \"name\": \"1.jpg\",\r\n      \"type\": \"image\",\r\n      \"size\": 169704,\r\n      \"mime\": \"image/jpeg\",\r\n      \"meta\": { \"width\": 1920, \"height\": 743 }\r\n    },\r\n    {\r\n      \"access\": \"public\",\r\n      \"path\": \"/vault/dAP3Ozc8/zGSPlCVN_dVx79zawV29lRvyNdo/hYZnXw../2.jpg\",\r\n      \"name\": \"2.jpg\",\r\n      \"type\": \"image\",\r\n      \"size\": 3080,\r\n      \"mime\": \"image/jpeg\",\r\n      \"meta\": { \"width\": 225, \"height\": 225 }\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://x8ki-letl-twmt.n7.xano.io/api:3Xncgo9I/product/1",
+					"protocol": "https",
+					"host": [
+						"x8ki-letl-twmt",
+						"n7",
+						"xano",
+						"io"
+					],
+					"path": [
+						"api:3Xncgo9I",
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Upload Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "content[]",
+							"type": "file",
+							"src": "postman-cloud:///1f0a0019-a2c6-4ea0-910b-eda58985b411"
+						},
+						{
+							"key": "content[]",
+							"type": "file",
+							"src": "postman-cloud:///1f0a0019-ea72-4150-9c77-f98d78cb1cc9"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://x8ki-letl-twmt.n7.xano.io/api:3Xncgo9I/upload/image",
+					"protocol": "https",
+					"host": [
+						"x8ki-letl-twmt",
+						"n7",
+						"xano",
+						"io"
+					],
+					"path": [
+						"api:3Xncgo9I",
+						"upload",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get producto id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://x8ki-letl-twmt.n7.xano.io/api:3Xncgo9I/product/3",
+					"protocol": "https",
+					"host": [
+						"x8ki-letl-twmt",
+						"n7",
+						"xano",
+						"io"
+					],
+					"path": [
+						"api:3Xncgo9I",
+						"product",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"heltonsmith@hotmail.com\",\r\n  \"password\": \"abc123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://x8ki-letl-twmt.n7.xano.io/api:PDQSRKQT/auth/login",
+					"protocol": "https",
+					"host": [
+						"x8ki-letl-twmt",
+						"n7",
+						"xano",
+						"io"
+					],
+					"path": [
+						"api:PDQSRKQT",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
